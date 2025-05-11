@@ -1,6 +1,6 @@
-# E-commerce API with RBAC Documentation
+# Shopping-cart API with RBAC Documentation
 
-This document provides an overview of the API endpoints and their functionality in the E-commerce application with Role-Based Access Control (RBAC).
+This document provides an overview of the API endpoints and their functionality in the Shopping-cart application with Role-Based Access Control (RBAC).
 
 ## API Documentation
 
