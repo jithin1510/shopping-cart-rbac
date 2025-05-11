@@ -1,0 +1,70 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "E-commerce API with RBAC",
+    "description": "API documentation for E-commerce application with Role-Based Access Control (RBAC)",
+    "version": "1.0.0",
+    "contact": {
+      "email": "support@mernshop.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000",
+      "description": "Development server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authentication operations"
+    },
+    {
+      "name": "Users",
+      "description": "User management operations"
+    },
+    {
+      "name": "Products",
+      "description": "Product management operations"
+    },
+    {
+      "name": "Categories",
+      "description": "Category management operations"
+    },
+    {
+      "name": "Brands",
+      "description": "Brand management operations"
+    },
+    {
+      "name": "Cart",
+      "description": "Shopping cart operations"
+    },
+    {
+      "name": "Orders",
+      "description": "Order management operations"
+    },
+    {
+      "name": "Wishlist",
+      "description": "Wishlist operations"
+    },
+    {
+      "name": "Reviews",
+      "description": "Product review operations"
+    },
+    {
+      "name": "Address",
+      "description": "User address operations"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "cookieAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "token"
+      }
+    },
+    "schemas": {}
+  },
+  "paths": {}
+}

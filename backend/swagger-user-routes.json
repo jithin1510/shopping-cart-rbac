@@ -1,0 +1,212 @@
+{
+  "/users/vendors/all": {
+    "get": {
+      "tags": ["Users"],
+      "summary": "Get all vendors",
+      "description": "Retrieves all vendors for admin approval (admin only)",
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "List of vendors",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Forbidden - Not an admin"
+        },
+        "500": {
+          "description": "Server error"
+        }
+      }
+    }
+  },
+  "/users/vendors/approve/{id}": {
+    "patch": {
+      "tags": ["Users"],
+      "summary": "Approve or reject vendor",
+      "description": "Approves or rejects a vendor account (admin only)",
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "Vendor ID"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "isApproved": {
+                  "type": "boolean",
+                  "example": true
+                }
+              },
+              "required": ["isApproved"]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Vendor status updated successfully",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad request - User is not a vendor"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Forbidden - Not an admin"
+        },
+        "404": {
+          "description": "Vendor not found"
+        },
+        "500": {
+          "description": "Server error"
+        }
+      }
+    }
+  },
+  "/users/{id}": {
+    "get": {
+      "tags": ["Users"],
+      "summary": "Get user by ID",
+      "description": "Retrieves user details by ID",
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "User ID"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "User details",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "User not found"
+        },
+        "500": {
+          "description": "Server error"
+        }
+      }
+    },
+    "patch": {
+      "tags": ["Users"],
+      "summary": "Update user",
+      "description": "Updates user details",
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "User ID"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "John Doe"
+                },
+                "email": {
+                  "type": "string",
+                  "format": "email",
+                  "example": "john@example.com"
+                }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "User updated successfully",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "User not found"
+        },
+        "500": {
+          "description": "Server error"
+        }
+      }
+    }
+  }
+}

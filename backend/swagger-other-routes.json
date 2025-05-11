@@ -1,0 +1,649 @@
+{
+  "/wishlist": {
+    "get": {
+      "tags": ["Wishlist"],
+      "summary": "Get user's wishlist",
+      "description": "Retrieves the current user's wishlist",
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "User's wishlist",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Wishlist"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "500": {
+          "description": "Server error"
+        }
+      }
+    },
+    "post": {
+      "tags": ["Wishlist"],
+      "summary": "Add to wishlist",
+      "description": "Adds a product to the user's wishlist",
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "productId": {
+                  "type": "string",
+                  "example": "60d0fe4f5311236168a109cd"
+                }
+              },
+              "required": ["productId"]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Product added to wishlist",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Wishlist"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Product not found"
+        },
+        "500": {
+          "description": "Server error"
+        }
+      }
+    }
+  },
+  "/wishlist/{productId}": {
+    "delete": {
+      "tags": ["Wishlist"],
+      "summary": "Remove from wishlist",
+      "description": "Removes a product from the user's wishlist",
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "productId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "Product ID to remove"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Product removed from wishlist",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Wishlist"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Product not found in wishlist"
+        },
+        "500": {
+          "description": "Server error"
+        }
+      }
+    }
+  },
+  "/address": {
+    "get": {
+      "tags": ["Address"],
+      "summary": "Get user's addresses",
+      "description": "Retrieves all addresses for the current user",
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "List of user's addresses",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Address"
+                }
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "500": {
+          "description": "Server error"
+        }
+      }
+    },
+    "post": {
+      "tags": ["Address"],
+      "summary": "Add address",
+      "description": "Adds a new address for the user",
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "John Doe"
+                },
+                "street": {
+                  "type": "string",
+                  "example": "123 Main St"
+                },
+                "city": {
+                  "type": "string",
+                  "example": "New York"
+                },
+                "state": {
+                  "type": "string",
+                  "example": "NY"
+                },
+                "postalCode": {
+                  "type": "string",
+                  "example": "10001"
+                },
+                "country": {
+                  "type": "string",
+                  "example": "USA"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "123-456-7890"
+                },
+                "isDefault": {
+                  "type": "boolean",
+                  "example": false
+                }
+              },
+              "required": ["name", "street", "city", "state", "postalCode", "country", "phone"]
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Address added successfully",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Address"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "500": {
+          "description": "Server error"
+        }
+      }
+    }
+  },
+  "/address/{id}": {
+    "get": {
+      "tags": ["Address"],
+      "summary": "Get address by ID",
+      "description": "Retrieves address details by ID",
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "Address ID"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Address details",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Address"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Forbidden - Not the address owner"
+        },
+        "404": {
+          "description": "Address not found"
+        },
+        "500": {
+          "description": "Server error"
+        }
+      }
+    },
+    "patch": {
+      "tags": ["Address"],
+      "summary": "Update address",
+      "description": "Updates an existing address",
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "Address ID"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "street": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "postalCode": {
+                  "type": "string"
+                },
+                "country": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "isDefault": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Address updated successfully",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Address"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Forbidden - Not the address owner"
+        },
+        "404": {
+          "description": "Address not found"
+        },
+        "500": {
+          "description": "Server error"
+        }
+      }
+    },
+    "delete": {
+      "tags": ["Address"],
+      "summary": "Delete address",
+      "description": "Deletes an address",
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "Address ID"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Address deleted successfully"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Forbidden - Not the address owner"
+        },
+        "404": {
+          "description": "Address not found"
+        },
+        "500": {
+          "description": "Server error"
+        }
+      }
+    }
+  },
+  "/reviews/{productId}": {
+    "get": {
+      "tags": ["Reviews"],
+      "summary": "Get product reviews",
+      "description": "Retrieves all reviews for a product",
+      "parameters": [
+        {
+          "name": "productId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "Product ID"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "List of reviews",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Review"
+                }
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Product not found"
+        },
+        "500": {
+          "description": "Server error"
+        }
+      }
+    },
+    "post": {
+      "tags": ["Reviews"],
+      "summary": "Add review",
+      "description": "Adds a review for a product",
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "productId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "Product ID"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "rating": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 5,
+                  "example": 5
+                },
+                "comment": {
+                  "type": "string",
+                  "example": "Great product, highly recommended!"
+                }
+              },
+              "required": ["rating"]
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Review added successfully",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Review"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad request - Invalid rating"
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "404": {
+          "description": "Product not found"
+        },
+        "500": {
+          "description": "Server error"
+        }
+      }
+    }
+  },
+  "/categories": {
+    "get": {
+      "tags": ["Categories"],
+      "summary": "Get all categories",
+      "description": "Retrieves all product categories",
+      "responses": {
+        "200": {
+          "description": "List of categories",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Server error"
+        }
+      }
+    },
+    "post": {
+      "tags": ["Categories"],
+      "summary": "Create category",
+      "description": "Creates a new product category (admin only)",
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Electronics"
+                }
+              },
+              "required": ["name"]
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Category created successfully",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Category"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Forbidden - Not an admin"
+        },
+        "500": {
+          "description": "Server error"
+        }
+      }
+    }
+  },
+  "/brands": {
+    "get": {
+      "tags": ["Brands"],
+      "summary": "Get all brands",
+      "description": "Retrieves all product brands",
+      "responses": {
+        "200": {
+          "description": "List of brands",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Brand"
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Server error"
+        }
+      }
+    },
+    "post": {
+      "tags": ["Brands"],
+      "summary": "Create brand",
+      "description": "Creates a new product brand (admin only)",
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Apple"
+                }
+              },
+              "required": ["name"]
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Brand created successfully",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Brand"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized"
+        },
+        "403": {
+          "description": "Forbidden - Not an admin"
+        },
+        "500": {
+          "description": "Server error"
+        }
+      }
+    }
+  }
+}

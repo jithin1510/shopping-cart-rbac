@@ -1,0 +1,364 @@
+{
+  "User": {
+    "type": "object",
+    "properties": {
+      "_id": {
+        "type": "string",
+        "description": "Unique identifier for the user"
+      },
+      "name": {
+        "type": "string",
+        "description": "User's full name"
+      },
+      "email": {
+        "type": "string",
+        "format": "email",
+        "description": "User's email address"
+      },
+      "isVerified": {
+        "type": "boolean",
+        "description": "Whether the user's email is verified"
+      },
+      "role": {
+        "type": "string",
+        "enum": ["customer", "vendor", "admin"],
+        "description": "User's role in the system"
+      },
+      "isApproved": {
+        "type": "boolean",
+        "description": "Whether the vendor is approved by admin (always true for customers)"
+      },
+      "isAdmin": {
+        "type": "boolean",
+        "description": "Legacy field indicating admin status"
+      }
+    },
+    "required": ["name", "email"]
+  },
+  "Product": {
+    "type": "object",
+    "properties": {
+      "_id": {
+        "type": "string",
+        "description": "Unique identifier for the product"
+      },
+      "title": {
+        "type": "string",
+        "description": "Product title"
+      },
+      "description": {
+        "type": "string",
+        "description": "Product description"
+      },
+      "price": {
+        "type": "number",
+        "description": "Product price"
+      },
+      "discountPercentage": {
+        "type": "number",
+        "description": "Discount percentage"
+      },
+      "category": {
+        "type": "string",
+        "description": "Category ID reference"
+      },
+      "brand": {
+        "type": "string",
+        "description": "Brand ID reference"
+      },
+      "stockQuantity": {
+        "type": "integer",
+        "description": "Available stock quantity"
+      },
+      "thumbnail": {
+        "type": "string",
+        "description": "URL to product thumbnail image"
+      },
+      "images": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "URLs to product images"
+      },
+      "isDeleted": {
+        "type": "boolean",
+        "description": "Whether the product is soft-deleted"
+      },
+      "vendor": {
+        "type": "string",
+        "description": "Vendor ID reference"
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Product creation timestamp"
+      },
+      "updatedAt": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Product last update timestamp"
+      }
+    },
+    "required": ["title", "description", "price", "category", "brand", "stockQuantity", "thumbnail", "images", "vendor"]
+  },
+  "Category": {
+    "type": "object",
+    "properties": {
+      "_id": {
+        "type": "string",
+        "description": "Unique identifier for the category"
+      },
+      "name": {
+        "type": "string",
+        "description": "Category name"
+      }
+    },
+    "required": ["name"]
+  },
+  "Brand": {
+    "type": "object",
+    "properties": {
+      "_id": {
+        "type": "string",
+        "description": "Unique identifier for the brand"
+      },
+      "name": {
+        "type": "string",
+        "description": "Brand name"
+      }
+    },
+    "required": ["name"]
+  },
+  "Cart": {
+    "type": "object",
+    "properties": {
+      "_id": {
+        "type": "string",
+        "description": "Unique identifier for the cart"
+      },
+      "user": {
+        "type": "string",
+        "description": "User ID reference"
+      },
+      "products": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "product": {
+              "type": "string",
+              "description": "Product ID reference"
+            },
+            "quantity": {
+              "type": "integer",
+              "description": "Quantity of the product"
+            }
+          }
+        },
+        "description": "Products in the cart"
+      }
+    },
+    "required": ["user", "products"]
+  },
+  "Order": {
+    "type": "object",
+    "properties": {
+      "_id": {
+        "type": "string",
+        "description": "Unique identifier for the order"
+      },
+      "user": {
+        "type": "string",
+        "description": "User ID reference"
+      },
+      "products": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "product": {
+              "type": "string",
+              "description": "Product ID reference"
+            },
+            "quantity": {
+              "type": "integer",
+              "description": "Quantity of the product"
+            },
+            "price": {
+              "type": "number",
+              "description": "Price at the time of order"
+            }
+          }
+        },
+        "description": "Products in the order"
+      },
+      "totalAmount": {
+        "type": "number",
+        "description": "Total order amount"
+      },
+      "shippingAddress": {
+        "type": "string",
+        "description": "Address ID reference"
+      },
+      "status": {
+        "type": "string",
+        "enum": ["pending", "processing", "shipped", "delivered", "cancelled"],
+        "description": "Order status"
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Order creation timestamp"
+      }
+    },
+    "required": ["user", "products", "totalAmount", "shippingAddress"]
+  },
+  "Wishlist": {
+    "type": "object",
+    "properties": {
+      "_id": {
+        "type": "string",
+        "description": "Unique identifier for the wishlist"
+      },
+      "user": {
+        "type": "string",
+        "description": "User ID reference"
+      },
+      "products": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "description": "Product ID reference"
+        },
+        "description": "Products in the wishlist"
+      }
+    },
+    "required": ["user", "products"]
+  },
+  "Review": {
+    "type": "object",
+    "properties": {
+      "_id": {
+        "type": "string",
+        "description": "Unique identifier for the review"
+      },
+      "user": {
+        "type": "string",
+        "description": "User ID reference"
+      },
+      "product": {
+        "type": "string",
+        "description": "Product ID reference"
+      },
+      "rating": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 5,
+        "description": "Rating from 1 to 5"
+      },
+      "comment": {
+        "type": "string",
+        "description": "Review comment"
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Review creation timestamp"
+      }
+    },
+    "required": ["user", "product", "rating"]
+  },
+  "Address": {
+    "type": "object",
+    "properties": {
+      "_id": {
+        "type": "string",
+        "description": "Unique identifier for the address"
+      },
+      "user": {
+        "type": "string",
+        "description": "User ID reference"
+      },
+      "name": {
+        "type": "string",
+        "description": "Recipient name"
+      },
+      "street": {
+        "type": "string",
+        "description": "Street address"
+      },
+      "city": {
+        "type": "string",
+        "description": "City"
+      },
+      "state": {
+        "type": "string",
+        "description": "State/Province"
+      },
+      "postalCode": {
+        "type": "string",
+        "description": "Postal/ZIP code"
+      },
+      "country": {
+        "type": "string",
+        "description": "Country"
+      },
+      "phone": {
+        "type": "string",
+        "description": "Contact phone number"
+      },
+      "isDefault": {
+        "type": "boolean",
+        "description": "Whether this is the default address"
+      }
+    },
+    "required": ["user", "name", "street", "city", "state", "postalCode", "country", "phone"]
+  },
+  "OTP": {
+    "type": "object",
+    "properties": {
+      "_id": {
+        "type": "string",
+        "description": "Unique identifier for the OTP"
+      },
+      "user": {
+        "type": "string",
+        "description": "User ID reference"
+      },
+      "otp": {
+        "type": "string",
+        "description": "Hashed OTP value"
+      },
+      "expiresAt": {
+        "type": "string",
+        "format": "date-time",
+        "description": "OTP expiration timestamp"
+      }
+    },
+    "required": ["user", "otp", "expiresAt"]
+  },
+  "PasswordResetToken": {
+    "type": "object",
+    "properties": {
+      "_id": {
+        "type": "string",
+        "description": "Unique identifier for the token"
+      },
+      "user": {
+        "type": "string",
+        "description": "User ID reference"
+      },
+      "token": {
+        "type": "string",
+        "description": "Hashed reset token"
+      },
+      "expiresAt": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Token expiration timestamp"
+      }
+    },
+    "required": ["user", "token", "expiresAt"]
+  }
+}
