@@ -1,5 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addProduct, deleteProductById, fetchProductById, fetchProducts, undeleteProductById, updateProductById } from "./ProductApi";
+import { 
+  addProduct, 
+  deleteProductById, 
+  fetchProductById, 
+  fetchProducts, 
+  fetchVendorProducts, 
+  undeleteProductById, 
+  updateProductById 
+} from "./ProductApi";
 
 
 const initialState={
@@ -7,7 +15,9 @@ const initialState={
     productUpdateStatus:'idle',
     productAddStatus:"idle",
     productFetchStatus:"idle",
+    vendorProductsStatus: "idle",
     products:[],
+    vendorProducts: [],
     totalResults:0,
     isFilterOpen:false,
     selectedProduct:null,
@@ -15,29 +25,67 @@ const initialState={
     successMessage:null
 }
 
-export const addProductAsync=createAsyncThunk("products/addProductAsync",async(data)=>{
-    const addedProduct=await addProduct(data)
-    return addedProduct
+export const addProductAsync=createAsyncThunk("products/addProductAsync",async(data, { rejectWithValue })=>{
+    try {
+        const addedProduct=await addProduct(data)
+        return addedProduct
+    } catch (error) {
+        return rejectWithValue(error)
+    }
 })
-export const fetchProductsAsync=createAsyncThunk("products/fetchProductsAsync",async(filters)=>{
-    const products=await fetchProducts(filters)
-    return products
+
+export const fetchProductsAsync=createAsyncThunk("products/fetchProductsAsync",async(filters, { rejectWithValue })=>{
+    try {
+        const products=await fetchProducts(filters)
+        return products
+    } catch (error) {
+        return rejectWithValue(error)
+    }
 })
-export const fetchProductByIdAsync=createAsyncThunk("products/fetchProductByIdAsync",async(id)=>{
-    const selectedProduct=await fetchProductById(id)
-    return selectedProduct
+
+export const fetchProductByIdAsync=createAsyncThunk("products/fetchProductByIdAsync",async(id, { rejectWithValue })=>{
+    try {
+        const selectedProduct=await fetchProductById(id)
+        return selectedProduct
+    } catch (error) {
+        return rejectWithValue(error)
+    }
 })
-export const updateProductByIdAsync=createAsyncThunk("products/updateProductByIdAsync",async(update)=>{
-    const updatedProduct=await updateProductById(update)
-    return updatedProduct
+
+export const updateProductByIdAsync=createAsyncThunk("products/updateProductByIdAsync",async(update, { rejectWithValue })=>{
+    try {
+        const updatedProduct=await updateProductById(update)
+        return updatedProduct
+    } catch (error) {
+        return rejectWithValue(error)
+    }
 })
-export const undeleteProductByIdAsync=createAsyncThunk("products/undeleteProductByIdAsync",async(id)=>{
-    const unDeletedProduct=await undeleteProductById(id)
-    return unDeletedProduct
+
+export const undeleteProductByIdAsync=createAsyncThunk("products/undeleteProductByIdAsync",async(id, { rejectWithValue })=>{
+    try {
+        const unDeletedProduct=await undeleteProductById(id)
+        return unDeletedProduct
+    } catch (error) {
+        return rejectWithValue(error)
+    }
 })
-export const deleteProductByIdAsync=createAsyncThunk("products/deleteProductByIdAsync",async(id)=>{
-    const deletedProduct=await deleteProductById(id)
-    return deletedProduct
+
+export const deleteProductByIdAsync=createAsyncThunk("products/deleteProductByIdAsync",async(id, { rejectWithValue })=>{
+    try {
+        const deletedProduct=await deleteProductById(id)
+        return deletedProduct
+    } catch (error) {
+        return rejectWithValue(error)
+    }
+})
+
+export const fetchVendorProductsAsync=createAsyncThunk("products/fetchVendorProductsAsync",async(_, { rejectWithValue })=>{
+    try {
+        const products=await fetchVendorProducts()
+        return products
+    } catch (error) {
+        return rejectWithValue(error)
+    }
 })
 
 const productSlice=createSlice({
@@ -67,6 +115,9 @@ const productSlice=createSlice({
         },
         resetProductFetchStatus:(state)=>{
             state.productFetchStatus='idle'
+        },
+        resetVendorProductsStatus:(state)=>{
+            state.vendorProductsStatus='idle'
         }
     },
     extraReducers:(builder)=>{
@@ -80,7 +131,7 @@ const productSlice=createSlice({
             })
             .addCase(addProductAsync.rejected,(state,action)=>{
                 state.productAddStatus='rejected'
-                state.errors=action.error
+                state.errors=action.payload || action.error
             })
 
             .addCase(fetchProductsAsync.pending,(state)=>{
@@ -93,7 +144,7 @@ const productSlice=createSlice({
             })
             .addCase(fetchProductsAsync.rejected,(state,action)=>{
                 state.productFetchStatus='rejected'
-                state.errors=action.error
+                state.errors=action.payload || action.error
             })
 
             .addCase(fetchProductByIdAsync.pending,(state)=>{
@@ -105,7 +156,7 @@ const productSlice=createSlice({
             })
             .addCase(fetchProductByIdAsync.rejected,(state,action)=>{
                 state.productFetchStatus='rejected'
-                state.errors=action.error
+                state.errors=action.payload || action.error
             })
 
             .addCase(updateProductByIdAsync.pending,(state)=>{
@@ -114,11 +165,18 @@ const productSlice=createSlice({
             .addCase(updateProductByIdAsync.fulfilled,(state,action)=>{
                 state.productUpdateStatus='fullfilled'
                 const index=state.products.findIndex((product)=>product._id===action.payload._id)
-                state.products[index]=action.payload
+                if (index !== -1) {
+                    state.products[index]=action.payload
+                }
+                // Also update in vendor products if present
+                const vendorIndex=state.vendorProducts.findIndex((product)=>product._id===action.payload._id)
+                if (vendorIndex !== -1) {
+                    state.vendorProducts[vendorIndex]=action.payload
+                }
             })
             .addCase(updateProductByIdAsync.rejected,(state,action)=>{
                 state.productUpdateStatus='rejected'
-                state.errors=action.error
+                state.errors=action.payload || action.error
             })
 
             .addCase(undeleteProductByIdAsync.pending,(state)=>{
@@ -127,11 +185,18 @@ const productSlice=createSlice({
             .addCase(undeleteProductByIdAsync.fulfilled,(state,action)=>{
                 state.status='fullfilled'
                 const index=state.products.findIndex((product)=>product._id===action.payload._id)
-                state.products[index]=action.payload
+                if (index !== -1) {
+                    state.products[index]=action.payload
+                }
+                // Also update in vendor products if present
+                const vendorIndex=state.vendorProducts.findIndex((product)=>product._id===action.payload._id)
+                if (vendorIndex !== -1) {
+                    state.vendorProducts[vendorIndex]=action.payload
+                }
             })
             .addCase(undeleteProductByIdAsync.rejected,(state,action)=>{
                 state.status='rejected'
-                state.errors=action.error
+                state.errors=action.payload || action.error
             })
 
             .addCase(deleteProductByIdAsync.pending,(state)=>{
@@ -140,11 +205,30 @@ const productSlice=createSlice({
             .addCase(deleteProductByIdAsync.fulfilled,(state,action)=>{
                 state.status='fullfilled'
                 const index=state.products.findIndex((product)=>product._id===action.payload._id)
-                state.products[index]=action.payload
+                if (index !== -1) {
+                    state.products[index]=action.payload
+                }
+                // Also update in vendor products if present
+                const vendorIndex=state.vendorProducts.findIndex((product)=>product._id===action.payload._id)
+                if (vendorIndex !== -1) {
+                    state.vendorProducts[vendorIndex]=action.payload
+                }
             })
             .addCase(deleteProductByIdAsync.rejected,(state,action)=>{
                 state.status='rejected'
-                state.errors=action.error
+                state.errors=action.payload || action.error
+            })
+            
+            .addCase(fetchVendorProductsAsync.pending,(state)=>{
+                state.vendorProductsStatus='pending'
+            })
+            .addCase(fetchVendorProductsAsync.fulfilled,(state,action)=>{
+                state.vendorProductsStatus='fullfilled'
+                state.vendorProducts=action.payload
+            })
+            .addCase(fetchVendorProductsAsync.rejected,(state,action)=>{
+                state.vendorProductsStatus='rejected'
+                state.errors=action.payload || action.error
             })
     }
 })
@@ -152,6 +236,8 @@ const productSlice=createSlice({
 // exporting selectors
 export const selectProductStatus=(state)=>state.ProductSlice.status
 export const selectProducts=(state)=>state.ProductSlice.products
+export const selectVendorProducts=(state)=>state.ProductSlice.vendorProducts
+export const selectVendorProductsStatus=(state)=>state.ProductSlice.vendorProductsStatus
 export const selectProductTotalResults=(state)=>state.ProductSlice.totalResults
 export const selectSelectedProduct=(state)=>state.ProductSlice.selectedProduct
 export const selectProductErrors=(state)=>state.ProductSlice.errors
@@ -162,6 +248,16 @@ export const selectProductIsFilterOpen=(state)=>state.ProductSlice.isFilterOpen
 export const selectProductFetchStatus=(state)=>state.ProductSlice.productFetchStatus
 
 // exporting actions
-export const {clearProductSuccessMessage,clearProductErrors,clearSelectedProduct,resetProductStatus,resetProductUpdateStatus,resetProductAddStatus,toggleFilters,resetProductFetchStatus}=productSlice.actions
+export const {
+    clearProductSuccessMessage,
+    clearProductErrors,
+    clearSelectedProduct,
+    resetProductStatus,
+    resetProductUpdateStatus,
+    resetProductAddStatus,
+    toggleFilters,
+    resetProductFetchStatus,
+    resetVendorProductsStatus
+}=productSlice.actions
 
 export default productSlice.reducer

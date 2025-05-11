@@ -9,10 +9,19 @@ export const axiosi = axios.create({
 // Add request interceptor for debugging
 axiosi.interceptors.request.use(
   config => {
+    // Add timestamp to prevent caching issues
+    if (config.method === 'get') {
+      config.params = {
+        ...config.params,
+        _t: Date.now()
+      };
+    }
+    
     console.log('API Request:', {
       url: config.url,
       method: config.method,
-      data: config.data
+      data: config.data,
+      headers: config.headers
     });
     return config;
   },
@@ -33,11 +42,25 @@ axiosi.interceptors.response.use(
     return response;
   },
   error => {
-    console.error('API Response Error:', error.response ? {
-      url: error.config.url,
-      status: error.response.status,
-      data: error.response.data
-    } : error);
+    // Improved error logging
+    if (error.response) {
+      console.error('API Response Error:', {
+        url: error.config?.url,
+        status: error.response.status,
+        data: error.response.data,
+        message: error.message
+      });
+    } else if (error.request) {
+      console.error('API No Response Error:', {
+        url: error.config?.url,
+        request: error.request,
+        message: 'No response received from server'
+      });
+    } else {
+      console.error('API Setup Error:', {
+        message: error.message
+      });
+    }
     return Promise.reject(error);
   }
 );

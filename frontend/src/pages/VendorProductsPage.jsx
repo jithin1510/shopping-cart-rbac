@@ -9,7 +9,6 @@ import {
   CardContent, 
   CardActions,
   Button,
-  IconButton,
   Dialog,
   DialogActions,
   DialogContent,
@@ -21,22 +20,33 @@ import {
   InputAdornment
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectLoggedInUser } from '../features/auth/AuthSlice';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 import RestoreIcon from '@mui/icons-material/Restore';
-import axios from 'axios';
 import { toast } from 'react-toastify';
+import { 
+  fetchVendorProductsAsync, 
+  deleteProductByIdAsync, 
+  undeleteProductByIdAsync,
+  selectVendorProducts,
+  selectVendorProductsStatus,
+  selectProductErrors,
+  clearProductErrors
+} from '../features/products/ProductSlice';
+import { Navbar } from '../features/navigation/components/Navbar';
 
 const VendorProductsPage = () => {
   const loggedInUser = useSelector(selectLoggedInUser);
+  const products = useSelector(selectVendorProducts);
+  const status = useSelector(selectVendorProductsStatus);
+  const error = useSelector(selectProductErrors);
   const navigate = useNavigate();
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+  
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [actionType, setActionType] = useState('');
@@ -51,22 +61,14 @@ const VendorProductsPage = () => {
     } else if (!loggedInUser.isApproved) {
       navigate('/vendor/pending-approval');
     } else {
-      fetchVendorProducts();
+      dispatch(fetchVendorProductsAsync());
     }
-  }, [loggedInUser, navigate]);
-
-  const fetchVendorProducts = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get('/api/products/vendor/my-products');
-      setProducts(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching products:', error);
-      setError('Failed to load products. Please try again later.');
-      setLoading(false);
-    }
-  };
+    
+    // Clear any errors when component unmounts
+    return () => {
+      dispatch(clearProductErrors());
+    };
+  }, [loggedInUser, navigate, dispatch]);
 
   const handleEdit = (productId) => {
     navigate(`/product-update/${productId}`);
@@ -87,28 +89,16 @@ const VendorProductsPage = () => {
   const handleConfirmAction = async () => {
     try {
       if (actionType === 'delete') {
-        await axios.delete(`/api/products/${selectedProduct._id}`);
-        // Update local state
-        setProducts(products.map(product => 
-          product._id === selectedProduct._id 
-            ? { ...product, isDeleted: true } 
-            : product
-        ));
+        await dispatch(deleteProductByIdAsync(selectedProduct._id)).unwrap();
         toast.success('Product deleted successfully');
       } else if (actionType === 'restore') {
-        await axios.patch(`/api/products/undelete/${selectedProduct._id}`);
-        // Update local state
-        setProducts(products.map(product => 
-          product._id === selectedProduct._id 
-            ? { ...product, isDeleted: false } 
-            : product
-        ));
+        await dispatch(undeleteProductByIdAsync(selectedProduct._id)).unwrap();
         toast.success('Product restored successfully');
       }
       setOpenDialog(false);
     } catch (error) {
       console.error('Error updating product:', error);
-      toast.error('Failed to update product. Please try again.');
+      toast.error(error?.message || 'Failed to update product. Please try again.');
     }
   };
 
@@ -124,7 +114,9 @@ const VendorProductsPage = () => {
     product.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  if (loading) {
+  const isLoading = status === 'pending';
+
+  if (isLoading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
         <CircularProgress />
@@ -133,6 +125,8 @@ const VendorProductsPage = () => {
   }
 
   return (
+    <>
+    <Navbar/>
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
         <Typography variant="h4" component="h1">
@@ -150,7 +144,7 @@ const VendorProductsPage = () => {
       
       {error && (
         <Alert severity="error" sx={{ mb: 3 }}>
-          {error}
+          {error.message || 'An error occurred. Please try again.'}
         </Alert>
       )}
       
@@ -233,13 +227,13 @@ const VendorProductsPage = () => {
                     {product.title}
                   </Typography>
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                    {product.description.substring(0, 100)}...
+                    {product.description?.substring(0, 100) || 'No description'}...
                   </Typography>
                   <Typography variant="h6" color="primary">
-                    ${product.price.toFixed(2)}
+                    ${product.price?.toFixed(2) || '0.00'}
                   </Typography>
                   <Typography variant="body2">
-                    Stock: {product.stockQuantity}
+                    Stock: {product.stockQuantity || 0}
                   </Typography>
                 </CardContent>
                 <CardActions>
@@ -308,6 +302,7 @@ const VendorProductsPage = () => {
         </DialogActions>
       </Dialog>
     </Container>
+    </>
   );
 };
 

@@ -27,6 +27,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { axiosi } from '../config/axios';
 import { toast } from 'react-toastify';
+import { Navbar } from '../features/navigation/components/Navbar';
 
 const AdminVendorApprovalPage = () => {
   const loggedInUser = useSelector(selectLoggedInUser);
@@ -103,6 +104,8 @@ const AdminVendorApprovalPage = () => {
   }
 
   return (
+    <>
+    <Navbar/>
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Typography variant="h4" gutterBottom component="h1">
         Vendor Approval Management
@@ -226,6 +229,7 @@ const AdminVendorApprovalPage = () => {
         </DialogActions>
       </Dialog>
     </Container>
+    </>
   );
 };
 

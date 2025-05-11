@@ -6,6 +6,7 @@ import { selectLoggedInUser, logoutAsync } from '../features/auth/AuthSlice';
 import PendingIcon from '@mui/icons-material/Pending';
 import Lottie from 'lottie-react';
 import { loadingAnimation } from '../assets';
+import { Navbar } from '../features/navigation/components/Navbar';
 
 const VendorPendingApprovalPage = () => {
   const loggedInUser = useSelector(selectLoggedInUser);
@@ -30,6 +31,8 @@ const VendorPendingApprovalPage = () => {
   };
 
   return (
+    <>
+    <Navbar/>
     <Container maxWidth="md" sx={{ mt: 8, mb: 4 }}>
       <Paper 
         elevation={3} 
@@ -71,6 +74,7 @@ const VendorPendingApprovalPage = () => {
         </Button>
       </Paper>
     </Container>
+    </>
   );
 };
 

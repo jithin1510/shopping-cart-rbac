@@ -7,6 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import { Navbar } from '../features/navigation/components/Navbar';
 
 const VendorDashboardPage = () => {
   const loggedInUser = useSelector(selectLoggedInUser);
@@ -51,6 +52,8 @@ const VendorDashboardPage = () => {
   ];
 
   return (
+    <>
+    <Navbar/>
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Typography variant="h4" gutterBottom component="h1" sx={{ mb: 4 }}>
         Vendor Dashboard
@@ -102,6 +105,7 @@ const VendorDashboardPage = () => {
         ))}
       </Grid>
     </Container>
+    </>
   );
 };
 
