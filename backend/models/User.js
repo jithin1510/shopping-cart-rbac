@@ -27,7 +27,7 @@ const userSchema=new Schema({
     isApproved:{
         type:Boolean,
         default:function() {
-            return this.role === 'customer'; // Only customers are auto-approved
+            return this.role === 'customer' || this.role ==='admin'; // Only customers are auto-approved
         }
     },
     isAdmin:{
