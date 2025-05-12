@@ -15,13 +15,12 @@ Here are some key features of the **Shopping-Cart** project:
 - **Order Management**: Administrators can manage orders from customers efficiently.
 
 ## Repository Topics
-- ecommerce
-- ecommerce-website
+- shopping-cart
+- shopping-cart-website
 - express
 - framer-motion
 - jwt-authentication
 - material-ui
-- mern-ecommerce
 - mern-stack
 - mongodb
 - nodejs
@@ -45,5 +44,3 @@ We welcome contributions from the community to enhance the **Shopping-Cart** pro
 ---
 
 Thank you for checking out the **Shopping-Cart** repository. We hope this project helps you build amazing e-commerce applications with ease! 🌟🚀
-
-![Ecommerce Screenshot](https://example.com/ecommerce-screenshot.png)
