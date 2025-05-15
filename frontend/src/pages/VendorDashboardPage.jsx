@@ -8,6 +8,7 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import { Navbar } from '../features/navigation/components/Navbar';
+import { Footer } from '../features/footer/Footer';
 
 const VendorDashboardPage = () => {
   const loggedInUser = useSelector(selectLoggedInUser);
@@ -105,6 +106,7 @@ const VendorDashboardPage = () => {
         ))}
       </Grid>
     </Container>
+    <Footer/>
     </>
   );
 };

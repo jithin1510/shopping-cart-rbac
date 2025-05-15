@@ -61,7 +61,7 @@ const VendorPendingApprovalPage = () => {
         
         <Typography variant="body2" color="text.secondary" paragraph align="center" sx={{ mb: 4 }}>
           This process typically takes 1-2 business days. If you have any questions,
-          please contact our support team at support@mernshop.com
+          please contact our support team at support@Shoppingcart.com
         </Typography>
         
         <Button 

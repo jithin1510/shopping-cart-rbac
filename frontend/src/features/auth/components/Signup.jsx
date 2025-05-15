@@ -45,7 +45,7 @@ export const Signup = () => {
 
   useEffect(() => {
     if(status === 'fullfilled'){
-      let message = "Welcome! Verify your email to start shopping on mern-ecommerce."
+      let message = "Welcome! Verify your email to start shopping on Shopping Cart-ecommerce."
       if (selectedRole === 'vendor') {
         message = "Welcome! Verify your email and wait for admin approval to start selling."
       }
@@ -93,7 +93,7 @@ export const Signup = () => {
       <Stack flex={1} justifyContent={'center'} alignItems={'center'} py={4}>
         <Stack flexDirection={'row'} justifyContent={'center'} alignItems={'center'}>
           <Stack rowGap={'.4rem'}>
-            <Typography variant='h2' sx={{wordBreak:"break-word"}} fontWeight={600}>Mern Shop</Typography>
+            <Typography variant='h2' sx={{wordBreak:"break-word"}} fontWeight={600}>Shopping Cart</Typography>
             <Typography alignSelf={'flex-end'} color={'GrayText'} variant='body2'>- Shop Anything</Typography>
           </Stack>
         </Stack>

@@ -105,7 +105,7 @@ export const Navbar = ({isProductList=false}) => {
               textDecoration: 'none', 
             }}
           >
-            MERN SHOP
+            SHOPPING CART
           </Typography>
 
           <Stack flexDirection={'row'} alignItems={'center'} justifyContent={'center'} columnGap={2}>

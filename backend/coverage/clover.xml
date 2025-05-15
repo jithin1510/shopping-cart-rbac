@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1746988569013" clover="3.2.0">
-  <project timestamp="1746988569013" name="All files">
-    <metrics statements="360" coveredstatements="352" conditionals="158" coveredconditionals="140" methods="28" coveredmethods="27" elements="546" coveredelements="519" complexity="0" loc="360" ncloc="360" packages="5" files="12" classes="12"/>
+<coverage generated="1747110562958" clover="3.2.0">
+  <project timestamp="1747110562959" name="All files">
+    <metrics statements="360" coveredstatements="352" conditionals="160" coveredconditionals="142" methods="28" coveredmethods="27" elements="548" coveredelements="521" complexity="0" loc="360" ncloc="360" packages="5" files="12" classes="12"/>
     <package name="controllers">
       <metrics statements="262" coveredstatements="261" conditionals="117" coveredconditionals="108" methods="19" coveredmethods="19"/>
-      <file name="Auth.js" path="C:\Users\jithi\Ecommerce-1.2.3\backend\controllers\Auth.js">
+      <file name="Auth.js" path="C:\Users\jtadaka\capstoneproject\shopping-cart-rbac\backend\controllers\Auth.js">
         <metrics statements="120" coveredstatements="120" conditionals="51" coveredconditionals="46" methods="8" coveredmethods="8"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -127,7 +127,7 @@
         <line num="276" count="1" type="stmt"/>
         <line num="277" count="1" type="stmt"/>
       </file>
-      <file name="Product.js" path="C:\Users\jithi\Ecommerce-1.2.3\backend\controllers\Product.js">
+      <file name="Product.js" path="C:\Users\jtadaka\capstoneproject\shopping-cart-rbac\backend\controllers\Product.js">
         <metrics statements="96" coveredstatements="95" conditionals="47" coveredconditionals="43" methods="7" coveredmethods="7"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -226,7 +226,7 @@
         <line num="175" count="1" type="stmt"/>
         <line num="176" count="1" type="stmt"/>
       </file>
-      <file name="User.js" path="C:\Users\jithi\Ecommerce-1.2.3\backend\controllers\User.js">
+      <file name="User.js" path="C:\Users\jtadaka\capstoneproject\shopping-cart-rbac\backend\controllers\User.js">
         <metrics statements="46" coveredstatements="46" conditionals="19" coveredconditionals="19" methods="4" coveredmethods="4"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -278,7 +278,7 @@
     </package>
     <package name="middleware">
       <metrics statements="27" coveredstatements="24" conditionals="19" coveredconditionals="18" methods="4" coveredmethods="4"/>
-      <file name="RoleAuth.js" path="C:\Users\jithi\Ecommerce-1.2.3\backend\middleware\RoleAuth.js">
+      <file name="RoleAuth.js" path="C:\Users\jtadaka\capstoneproject\shopping-cart-rbac\backend\middleware\RoleAuth.js">
         <metrics statements="27" coveredstatements="24" conditionals="19" coveredconditionals="18" methods="4" coveredmethods="4"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="3" type="stmt"/>
@@ -310,54 +310,54 @@
       </file>
     </package>
     <package name="models">
-      <metrics statements="25" coveredstatements="25" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-      <file name="Brand.js" path="C:\Users\jithi\Ecommerce-1.2.3\backend\models\Brand.js">
+      <metrics statements="25" coveredstatements="25" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+      <file name="Brand.js" path="C:\Users\jtadaka\capstoneproject\shopping-cart-rbac\backend\models\Brand.js">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
         <line num="5" count="3" type="stmt"/>
         <line num="12" count="3" type="stmt"/>
       </file>
-      <file name="Category.js" path="C:\Users\jithi\Ecommerce-1.2.3\backend\models\Category.js">
+      <file name="Category.js" path="C:\Users\jtadaka\capstoneproject\shopping-cart-rbac\backend\models\Category.js">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
         <line num="5" count="3" type="stmt"/>
         <line num="12" count="3" type="stmt"/>
       </file>
-      <file name="OTP.js" path="C:\Users\jithi\Ecommerce-1.2.3\backend\models\OTP.js">
+      <file name="OTP.js" path="C:\Users\jtadaka\capstoneproject\shopping-cart-rbac\backend\models\OTP.js">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="22" count="1" type="stmt"/>
       </file>
-      <file name="PasswordResetToken.js" path="C:\Users\jithi\Ecommerce-1.2.3\backend\models\PasswordResetToken.js">
+      <file name="PasswordResetToken.js" path="C:\Users\jtadaka\capstoneproject\shopping-cart-rbac\backend\models\PasswordResetToken.js">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="22" count="1" type="stmt"/>
       </file>
-      <file name="Product.js" path="C:\Users\jithi\Ecommerce-1.2.3\backend\models\Product.js">
+      <file name="Product.js" path="C:\Users\jtadaka\capstoneproject\shopping-cart-rbac\backend\models\Product.js">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
         <line num="4" count="3" type="stmt"/>
         <line num="54" count="3" type="stmt"/>
       </file>
-      <file name="User.js" path="C:\Users\jithi\Ecommerce-1.2.3\backend\models\User.js">
-        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="User.js" path="C:\Users\jtadaka\capstoneproject\shopping-cart-rbac\backend\models\User.js">
+        <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="1" count="6" type="stmt"/>
         <line num="2" count="6" type="stmt"/>
         <line num="4" count="6" type="stmt"/>
-        <line num="30" count="37" type="stmt"/>
+        <line num="30" count="37" type="cond" truecount="2" falsecount="0"/>
         <line num="39" count="6" type="stmt"/>
       </file>
     </package>
     <package name="tests.utils">
       <metrics statements="44" coveredstatements="40" conditionals="18" coveredconditionals="12" methods="3" coveredmethods="2"/>
-      <file name="test-utils.js" path="C:\Users\jithi\Ecommerce-1.2.3\backend\tests\utils\test-utils.js">
+      <file name="test-utils.js" path="C:\Users\jtadaka\capstoneproject\shopping-cart-rbac\backend\tests\utils\test-utils.js">
         <metrics statements="44" coveredstatements="40" conditionals="18" coveredconditionals="12" methods="3" coveredmethods="2"/>
         <line num="1" count="4" type="stmt"/>
         <line num="2" count="4" type="stmt"/>
@@ -407,7 +407,7 @@
     </package>
     <package name="utils">
       <metrics statements="2" coveredstatements="2" conditionals="4" coveredconditionals="2" methods="1" coveredmethods="1"/>
-      <file name="SanitizeUser.js" path="C:\Users\jithi\Ecommerce-1.2.3\backend\utils\SanitizeUser.js">
+      <file name="SanitizeUser.js" path="C:\Users\jtadaka\capstoneproject\shopping-cart-rbac\backend\utils\SanitizeUser.js">
         <metrics statements="2" coveredstatements="2" conditionals="4" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="14" type="stmt"/>
